@@ -1,4 +1,5 @@
 "use client"
+import { LoginButton } from "@/modules/auth/components/login-button";
 import { Card, Button, CardBody, CardHeader } from "@heroui/react";
 import { CloudLightning } from "lucide-react";
 
@@ -26,7 +27,7 @@ export default function LoginPage(){
                     </CardHeader>
                     
                     <CardBody className="space-y-6">
-                    <Button color="primary">Button</Button>
+                        <LoginButton />
                     </CardBody>
                 </Card>
                 
