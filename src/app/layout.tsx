@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/modules/common/components/app-sidebar";
 import { cookies } from "next/headers";
 import { ThemeProvider } from "@/providers/theme.provider";
+import { HeroUIProvider } from "@/providers/hero-ui.provider";
 
 
 export const metadata: Metadata = {
@@ -26,20 +27,22 @@ export default async function RootLayout({
       <body
         className={ `${geistSans.variable} ${geistMono.variable}`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <AppSidebar /> 
-            <main className="h-full w-full">
-              <SidebarTrigger />
-              {children}
-            </main>
-          </SidebarProvider>
-        </ThemeProvider>
+        <HeroUIProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider defaultOpen={defaultOpen}>
+              <AppSidebar /> 
+              <main className="h-full w-full">
+                <SidebarTrigger />
+                {children}
+              </main>
+            </SidebarProvider>
+          </ThemeProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );

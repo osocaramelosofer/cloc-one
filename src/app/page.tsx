@@ -1,4 +1,7 @@
+"use client"
 import { ToggleTheme } from "@/modules/common/components/toggle-theme";
+import { CloudLightning } from "lucide-react";
+import {Button, Card, CardBody, CardHeader} from "@heroui/react";
 
 export default function Home() {
   return (

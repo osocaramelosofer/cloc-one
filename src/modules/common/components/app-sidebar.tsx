@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, ScanFace, Search, Settings } from "lucide-react"
 
 import {
   Sidebar,
@@ -10,30 +10,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { ToggleTheme } from "./toggle-theme"
 
 // Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inboxx",
-    url: "organizations",
+    title: "Organizations",
+    url: "/organizations",
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Login",
+    url: "/login",
+    icon: ScanFace,
   },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  
   {
     title: "Settings",
     url: "#",
@@ -59,6 +54,9 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuButton asChild>
+                <ToggleTheme />
+              </SidebarMenuButton>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
