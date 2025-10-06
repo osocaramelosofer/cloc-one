@@ -22,7 +22,6 @@ export default async function RootLayout({
 
   const cookieStore = await cookies()
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
-  console.log("xx",defaultOpen)
   return (
     <html lang="en" suppressHydrationWarning>
       <body

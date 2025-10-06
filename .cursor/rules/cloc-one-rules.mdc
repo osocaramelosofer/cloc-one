@@ -1,0 +1,9 @@
+---
+description: Reglas para programar el frontend de la aplicacion cloc one
+alwaysApply: true
+---
+Siempre que crees componentes personalizados:
+-Agregarlos dentro de @modules/[modulo correspondiente]/components/nuevo-component.tsx
+-Usa kebab-case para nombrarlos, ejemplo: login-button.tsx
+-Usa siempre Tailwind para estilos
+-Usa Framer Motion para animaciones si es necesario
