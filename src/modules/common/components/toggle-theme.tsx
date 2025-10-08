@@ -4,7 +4,7 @@ import * as React from "react"
 import { Moon, Sun, SunMedium } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/modules/ui/button"
 
 
 export function ToggleTheme() {

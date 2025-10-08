@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { geistMono, geistSans } from "@/lib/fonts/fonts";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/modules/ui/sidebar";
 import { AppSidebar } from "@/modules/common/components/app-sidebar";
 import { cookies } from "next/headers";
 import { ThemeProvider } from "@/providers/theme.provider";

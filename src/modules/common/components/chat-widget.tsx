@@ -4,9 +4,9 @@ import type React from "react"
 
 import { useState } from "react"
 import { MessageCircle, X, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/modules/ui/button"
 import { Card, Skeleton } from "@heroui/react"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/modules/ui/input"
 import { v4 as uuidv4 } from 'uuid';
 import { useSession } from "next-auth/react";
 

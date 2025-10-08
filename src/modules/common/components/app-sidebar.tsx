@@ -9,10 +9,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/modules/ui/sidebar"
 import { LogoutButton } from "@/modules/auth/components/logout-button"
 import { LoginButton } from "@/modules/auth/components/login-button"
-import { useSession } from "next-auth/react"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/config/auth"
 
@@ -42,7 +41,6 @@ const items = [
 
 export async function AppSidebar() {
   const session = await getServerSession(authOptions);
-  console.log("SESSION", session);
   return (
     <Sidebar className="bg-red-200" collapsible="icon">
       <SidebarContent >
