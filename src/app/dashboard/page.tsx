@@ -13,9 +13,6 @@ export default async function DashboardPage() {
   <div>
     <h1 className="text-2xl font-bold text-center">Dashboard</h1>
     <p>Signed in as {session?.user?.email}</p>
-    <div>
-      <LogoutButton />
-    </div>
   </div>
  )
 }
