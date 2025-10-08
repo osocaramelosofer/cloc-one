@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@heroui/button";
-import { Mail } from "lucide-react";
+import { Fingerprint } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 export const LoginButton = () => {
@@ -18,9 +18,9 @@ export const LoginButton = () => {
         color="primary"
         className="w-full"
         onPress={handleLogin}
-        startContent={<Mail className="w-5 h-5" />}
+        endContent={<Fingerprint className="w-5 h-5" />}
       >
-        Iniciar sesión con Magic Link
+        Iniciar sesión
       </Button>
     );
 };

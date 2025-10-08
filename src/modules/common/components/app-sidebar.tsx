@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, ScanFace, Search, Settings } from "lucide-react"
+import { Home, Inbox, ScanFace, Settings } from "lucide-react"
 
 import {
   Sidebar,
@@ -10,7 +10,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { ToggleTheme } from "./toggle-theme"
+import { LogoutButton } from "@/modules/auth/components/logout-button"
+import { LoginButton } from "@/modules/auth/components/login-button"
+import { useSession } from "next-auth/react"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/config/auth"
 
 // Menu items.
 const items = [
@@ -36,7 +40,9 @@ const items = [
   },
 ]
 
-export function AppSidebar() {
+export async function AppSidebar() {
+  const session = await getServerSession(authOptions);
+  console.log("SESSION", session);
   return (
     <Sidebar className="bg-red-200" collapsible="icon">
       <SidebarContent >
@@ -54,9 +60,17 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              {session ? (
               <SidebarMenuButton asChild>
-                <ToggleTheme />
+                <LogoutButton />
               </SidebarMenuButton>
+              ) : (
+              <SidebarMenuButton asChild>
+                <LoginButton />
+              </SidebarMenuButton>
+              )}
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
