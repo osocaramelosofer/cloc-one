@@ -4,13 +4,13 @@ import CognitoProvider from "next-auth/providers/cognito";
 export const authOptions: AuthOptions = {
     providers: [
         CognitoProvider({
-            clientId: process.env.COGNITO_CLIENT_ID!,
-            clientSecret: process.env.COGNITO_CLIENT_SECRET!,
-            issuer: process.env.COGNITO_ISSUER!,
+            clientId: String(process.env.COGNITO_CLIENT_ID),
+            clientSecret: String(process.env.COGNITO_CLIENT_SECRET),
+            issuer: String(process.env.COGNITO_ISSUER),
         })
     ],
     
-    secret: process.env.NEXTAUTH_SECRET!,
+    secret: String(process.env.NEXTAUTH_SECRET),
     pages: {
         signIn: "/",
         error: "/error",
@@ -19,14 +19,23 @@ export const authOptions: AuthOptions = {
         async jwt({ token, account }) {
             console.log("ACCOUNT", account)
             console.log("TOKEN", token)
+            
+            // Solo se ejecuta en el primer login cuando account existe
             if (account) {
                 token.accessToken = account.access_token;
+                token.idToken = account.id_token;
+                token.refreshToken = account.refresh_token;
+                token.expiresAt = account.expires_at;
             }
             return token;
         },
         async session({ session, token }) {
-            // check this later
-            // session.accessToken = token.accessToken;
+            // Pasar los tokens a la sesión del cliente
+            session.accessToken = token.accessToken as string;
+            session.idToken = token.idToken as string;
+            session.refreshToken = token.refreshToken as string;
+            session.expiresAt = token.expiresAt as number;
+            
             console.log("SESSION", session)
             console.log("TOKEN", token)
             return session;

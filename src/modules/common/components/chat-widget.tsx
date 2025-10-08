@@ -5,52 +5,101 @@ import type React from "react"
 import { useState } from "react"
 import { MessageCircle, X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card } from "@heroui/react"
+import { Card, Skeleton } from "@heroui/react"
 import { Input } from "@/components/ui/input"
+import { v4 as uuidv4 } from 'uuid';
+import { useSession } from "next-auth/react";
 
 interface Message {
   id: string
-  text: string
-  sender: "user" | "bot"
+  content: string
+  role: "user" | "assistant"
   timestamp: Date
 }
 
 export function ChatWidget() {
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const sessionId = useState(uuidv4())[0]; 
+  const [inputValue, setInputValue] = useState("")
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "¡Hola! ¿En qué puedo ayudarte hoy?",
-      sender: "bot",
+      content: "¡Hola!, ¿En qué puedo ayudarte hoy?",
+      role: "assistant",
       timestamp: new Date(),
     },
   ])
-  const [inputValue, setInputValue] = useState("")
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return
-
+    setLoading(true);
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue,
-      sender: "user",
+      content: inputValue,
+      role: "user",
       timestamp: new Date(),
     }
-
+    
     setMessages((prev) => [...prev, userMessage])
     setInputValue("")
-
-    // Simular respuesta del bot
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "Gracias por tu mensaje. Este es un chatbot de demostración.",
-        sender: "bot",
-        timestamp: new Date(),
-      }
-      setMessages((prev) => [...prev, botMessage])
-    }, 1000)
+    invokeAgent(inputValue)
   }
+
+
+
+  const invokeAgent = async (text: string) => {
+    setLoading(true);
+    try {
+      // Verificar que el usuario esté autenticado
+      if (!session) {
+        setMessages(prevMessages => [...prevMessages, { 
+          role: 'assistant', 
+          content: 'Por favor, inicia sesión para usar el chat.', 
+          timestamp: new Date(), 
+          id: Date.now().toString() 
+        }]);
+        setLoading(false);
+        return;
+      }
+
+      // Llamar a la API route del backend
+      const response = await fetch('/api/bedrock', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: text,
+          sessionId: sessionId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al invocar el agente');
+      }
+
+      // Agregar respuesta del bot al chat
+      setMessages(prevMessages => [...prevMessages, { 
+        role: 'assistant', 
+        content: data.completion, 
+        timestamp: new Date(), 
+        id: Date.now().toString() 
+      }]);
+    } catch (error) {
+      console.error('Error invoking agent:', error);
+      setMessages(prevMessages => [...prevMessages, { 
+        role: 'assistant', 
+        content: `Error: ${error instanceof Error ? error.message : 'Error desconocido'}`, 
+        timestamp: new Date(), 
+        id: Date.now().toString() 
+      }]);
+    }
+    setLoading(false);
+  };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -83,13 +132,13 @@ export function ChatWidget() {
           <div className="flex-1 overflow-y-auto p-4">
             <div className="space-y-4">
               {messages.map((message) => (
-                <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
+                <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
                     className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                      message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                      message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     }`}
                   >
-                    <p className="text-sm">{message.text}</p>
+                    <p className="text-sm">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
                       {message.timestamp.toLocaleTimeString("es-ES", {
                         hour: "2-digit",
@@ -99,6 +148,13 @@ export function ChatWidget() {
                   </div>
                 </div>
               ))}
+              {
+                loading && (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-[250px] rounded-lg" />
+                  </div>
+                )
+              }
             </div>
           </div>
 
