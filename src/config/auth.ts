@@ -1,6 +1,11 @@
 import { AuthOptions } from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 
+console.log("COGNITO_CLIENT_ID", process.env.COGNITO_CLIENT_ID)
+console.log("COGNITO_CLIENT_SECRET", process.env.COGNITO_CLIENT_SECRET)
+console.log("COGNITO_ISSUER", process.env.COGNITO_ISSUER)
+console.log("NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET)
+
 export const authOptions: AuthOptions = {
     providers: [
         CognitoProvider({
