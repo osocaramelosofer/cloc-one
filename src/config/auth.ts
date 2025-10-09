@@ -12,8 +12,8 @@ export const authOptions: AuthOptions = {
     
     secret: String(process.env.NEXTAUTH_SECRET),
     pages: {
-        signIn: "/",
-        error: "/error",
+        signIn: "/auth/login",
+        error: "/auth/login",
     },
     callbacks: {
         async jwt({ token, account }) {

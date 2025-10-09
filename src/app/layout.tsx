@@ -36,10 +36,8 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <SidebarProvider defaultOpen={defaultOpen}>
-                <AppSidebar />
-                {/* <AppNavbar /> */}
                 <main className="h-full w-full">
-                  <SidebarTrigger />
+                  {/* <SidebarTrigger /> */}
                   {children}
                 </main>
               </SidebarProvider>

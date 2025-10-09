@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@heroui/button";
-import { Mail } from "lucide-react";
+import { SidebarMenuButton } from "@/modules/ui/sidebar";
+import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 export const LogoutButton = () => {
@@ -13,14 +13,9 @@ export const LogoutButton = () => {
       };
     
     return (
-        <Button
-        size="lg"
-        color="danger"
-        className="w-full"
-        onPress={handleLogout}
-        startContent={<Mail className="w-5 h-5" />}
-      >
-        Cerrar sesión
-      </Button>
+      <SidebarMenuButton onClick={handleLogout}>
+      <LogOut />
+      <span>Cerrar sesión</span>
+    </SidebarMenuButton>
     );
 };

@@ -1,4 +1,4 @@
-import { Home, Inbox, ScanFace, Settings } from "lucide-react"
+import { Home, Settings } from "lucide-react"
 
 import {
   Sidebar,
@@ -23,16 +23,6 @@ const items = [
     icon: Home,
   },
   {
-    title: "Organizations",
-    url: "/organizations",
-    icon: Inbox,
-  },
-  {
-    title: "Login",
-    url: "/login",
-    icon: ScanFace,
-  },
-  {
     title: "Settings",
     url: "#",
     icon: Settings,
@@ -41,6 +31,7 @@ const items = [
 
 export async function AppSidebar() {
   const session = await getServerSession(authOptions);
+
   return (
     <Sidebar className="bg-red-200" collapsible="icon">
       <SidebarContent >
@@ -60,13 +51,9 @@ export async function AppSidebar() {
               ))}
 
               {session ? (
-              <SidebarMenuButton asChild>
-                <LogoutButton />
-              </SidebarMenuButton>
+              <LogoutButton />
               ) : (
-              <SidebarMenuButton asChild>
                 <LoginButton />
-              </SidebarMenuButton>
               )}
 
             </SidebarMenu>

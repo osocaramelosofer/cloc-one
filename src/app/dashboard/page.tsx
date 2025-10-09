@@ -10,7 +10,7 @@ export default async function DashboardPage() {
     return <div>No session</div>;
   }
  return(
-  <div>
+  <div className="h-full w-full">
     <h1 className="text-2xl font-bold text-center">Dashboard</h1>
     <p>Signed in as {session?.user?.email}</p>
   </div>
