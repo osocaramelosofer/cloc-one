@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vscode*
+
+# mock data
+src/modules/organizations/mock-organizations.ts
