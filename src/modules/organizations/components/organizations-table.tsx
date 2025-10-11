@@ -1,3 +1,4 @@
+"use client"
 import {
     Table,
     TableHeader,
@@ -14,10 +15,73 @@ import {
     Chip,
     Pagination,
   } from "@heroui/react";
-  import { MOCK_ORGANIZATIONS } from "../mock-organizations";
-  import { Archive, ChevronDown, EllipsisVertical, EyeClosed, EyeIcon, Plus, Search } from "lucide-react";
+  // import { MOCK_ORGANIZATIONS } from "../mock-organizations";
+  import { Archive, ChevronDown, EllipsisVertical, EyeIcon, Plus, Search } from "lucide-react";
   import { useState } from "react";
   
+  const MOCK_ORGANIZATIONS = {
+    "organizations": [
+    {
+      "organizacion": "mka",
+      "userCount": 1,
+      "users": [
+          {
+              "updated_at": "2025-09-05T04:02:52Z",
+              "Nombre Cliente": "Maldonaldo Daniel",
+              "Correo de Cliente": "tes@tesg.pe",
+              "ID User": "123fa",
+              "Organizacion": "make",
+              "OrganizationId": "ORG-153",
+              "Cognito Status": "NOT_VERIFIED",
+              "Cognito Exists": false,
+              "Cognito Enabled": false
+          }
+      ],
+      "awsAccountsCount": 0,
+      "awsAccounts": [],
+      "usersWithoutId": 0
+  },
+  {
+    "organizacion": "test",
+    "userCount": 1,
+    "users": [
+        {
+            "updated_at": "2025-09-05T04:02:52Z",
+            "Nombre Cliente": "Maldonaldo Daniel",
+            "Correo de Cliente": "tes@tesg.pe",
+            "ID User": "123fa",
+            "Organizacion": "make",
+            "OrganizationId": "ORG-153",
+            "Cognito Status": "NOT_VERIFIED",
+            "Cognito Exists": false,
+            "Cognito Enabled": false
+        }
+    ],
+    "awsAccountsCount": 0,
+    "awsAccounts": [],
+    "usersWithoutId": 0
+},
+{
+  "organizacion": "mka 3",
+  "userCount": 1,
+  "users": [
+      {
+          "updated_at": "2025-09-05T04:02:52Z",
+          "Nombre Cliente": "Maldonaldo Daniel",
+          "Correo de Cliente": "tes@tesg.pe",
+          "ID User": "123fa",
+          "Organizacion": "make",
+          "OrganizationId": "ORG-153",
+          "Cognito Status": "NOT_VERIFIED",
+          "Cognito Exists": false,
+          "Cognito Enabled": false
+      }
+  ],
+  "awsAccountsCount": 0,
+  "awsAccounts": [],
+  "usersWithoutId": 0
+},
+  ]}
   // Constants
   const columns = [
     { name: "ORGANIZATION", uid: "organizacion" },
@@ -34,7 +98,7 @@ import {
   } as const;
   
   const organizations = MOCK_ORGANIZATIONS.organizations
-    .slice(0, 30)
+    // .slice(0, 30)
     .map((org, index) => ({
       id: index + 1,
       organizacion: org.organizacion,
@@ -159,7 +223,7 @@ import {
         classNames={{
           wrapper: "max-h-[600px]",
         }}
-        topContentPlacement="inside"
+        topContentPlacement="outside"
         topContent={
           <div className="flex flex-col gap-4">
             <div className="flex justify-between gap-3 items-end">
